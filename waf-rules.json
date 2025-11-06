@@ -1,0 +1,32 @@
+{
+    "Name": "AI-FirewallACL",
+    "Scope": "REGIONAL",
+    "DefaultAction": {
+        "Allow": {}
+    },
+    "Rules": [
+        {
+            "Name": "IPRateLimit",
+            "Priority": 1,
+            "Statement": {
+                "RateBasedStatement": {
+                    "Limit": 2000,
+                    "AggregateKeyType": "IP"
+                }
+            },
+            "Action": {
+                "Block": {}
+            },
+            "VisibilityConfig": {
+                "SampledRequestsEnabled": true,
+                "CloudWatchMetricsEnabled": true,
+                "MetricName": "IPRateLimitRule"
+            }
+        }
+    ],
+    "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "AI-FirewallACLMetrics"
+    }
+} 

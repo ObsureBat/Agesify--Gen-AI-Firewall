@@ -1,0 +1,98 @@
+{
+    "widgets": [
+        {
+            "type": "metric",
+            "width": 12,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ "AWS/EC2", "CPUUtilization", "InstanceId", "i-066f88ec892d2f1f4", { "label": "Victim Server CPU" } ],
+                    [ ".", ".", ".", "i-07a69642c1ce4e88a", { "label": "Attacker Machine CPU" } ],
+                    [ ".", "NetworkIn", ".", "i-066f88ec892d2f1f4", { "label": "Victim Server Network In" } ],
+                    [ ".", "NetworkOut", ".", "i-066f88ec892d2f1f4", { "label": "Victim Server Network Out" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-east-1",
+                "period": 60,
+                "stat": "Average",
+                "title": "EC2 Instance Metrics"
+            }
+        },
+        {
+            "type": "metric",
+            "width": 12,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ "AWS/WAF", "BlockedRequests", "WebACL", "AI-FirewallACL", "Region", "us-east-1", { "label": "Blocked Requests" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-east-1",
+                "period": 900,
+                "stat": "Sum",
+                "title": "WAF Blocked Requests"
+            }
+        },
+        {
+            "type": "metric",
+            "width": 12,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ "AWS/SageMaker", "Invocations", "EndpointName", "ai-firewall-endpoint", { "label": "Model Invocations" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-east-1",
+                "period": 900,
+                "stat": "Sum",
+                "title": "SageMaker Endpoint Invocations"
+            }
+        },
+        {
+            "type": "metric",
+            "width": 12,
+            "height": 6,
+            "properties": {
+                "metrics": [
+                    [ "AWS/Lambda", "Invocations", "FunctionName", "AIFirewallProcessor", { "label": "Function Invocations" } ],
+                    [ ".", "Errors", ".", ".", { "label": "Function Errors" } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "us-east-1",
+                "period": 900,
+                "stat": "Sum",
+                "title": "Lambda Function Performance"
+            }
+        },
+        {
+            "type": "log",
+            "width": 24,
+            "height": 6,
+            "properties": {
+                "query": "SOURCE '/aws/vpc/flowlogs-ai-firewall' | fields @timestamp, srcAddr, dstAddr, srcPort, dstPort, protocol, packets, bytes\n| filter srcAddr like /10.0.1./ or dstAddr like /10.0.1./\n| sort @timestamp desc\n| limit 100",
+                "region": "us-east-1",
+                "title": "VPC Flow Logs - Attack Traffic",
+                "view": "table"
+            }
+        },
+        {
+            "type": "metric",
+            "width": 24,
+            "height": 3,
+            "properties": {
+                "metrics": [
+                    [ "AWS/GuardDuty", "FindingsCount", "Detector", "*", { "label": "GuardDuty Findings" } ]
+                ],
+                "view": "singleValue",
+                "region": "us-east-1",
+                "period": 300,
+                "stat": "Sum",
+                "title": "GuardDuty Findings"
+            }
+        }
+    ]
+} 

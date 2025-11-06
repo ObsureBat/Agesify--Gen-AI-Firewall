@@ -1,0 +1,11 @@
+{
+    "source": ["aws.logs"],
+    "detail-type": ["AWS API Call via CloudTrail"],
+    "detail": {
+        "eventSource": ["logs.amazonaws.com"],
+        "eventName": ["PutLogEvents"],
+        "requestParameters": {
+            "logGroupName": ["/aws/vpc/flowlogs-ai-firewall"]
+        }
+    }
+} 
